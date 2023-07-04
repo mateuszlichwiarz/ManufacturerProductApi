@@ -5,7 +5,9 @@ declare(strict_types=1);
 namespace App\Entity;
 
 use ApiPlatform\Metadata\ApiResource;
-use Doctrine\Orm\Mapping as ORM;
+use Doctrine\DBAL\Types\Type;
+use Doctrine\DBAL\Types\Types;
+use Doctrine\ORM\Mapping as ORM;
 
 /** A manufacturer */
 #[ApiResource]
@@ -31,8 +33,13 @@ class Manufacturer
     private string $countryCode = '';
 
     /** The date that the manufacturer was listed */
-    #[ORM\Column]
+    #[ORM\Column(type: "datetime")]
     private ?\DateTimeInterface $listedDate = null;
+
+    public function getId(): int
+    {
+        return $this->id;
+    }
 
     public function getName(): string
     {
@@ -69,9 +76,6 @@ class Manufacturer
         return $this->listedDate;
     }
 
-    /**
-     * @param \DateTimeInterface|null $listedDate
-     */
     public function setListedDate(?\DateTimeInterface $listedDate): void
     {
         $this->listedDate = $listedDate;
