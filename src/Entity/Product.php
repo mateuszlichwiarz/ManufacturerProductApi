@@ -34,4 +34,59 @@ class Product
         targetEntity: Manufacturer::class,
         inversedBy: "products")]
     private ?Manufacturer $manufacturer;
+
+    public function getId(): ?int
+    {
+        return $this->id;
+    }
+
+    public function getMpn(): ?string
+    {
+        return $this->mpn;
+    }
+
+    public function setMpn(?string $mpn): void
+    {
+        $this->mpn = $mpn;
+    }
+
+    public function getName(): string
+    {
+        return $this->name;
+    }
+
+    public function setName(string $name): void
+    {
+        $this->name = $name;
+    }
+
+    public function getDescription(): string
+    {
+        return $this->description;
+    }
+
+    public function setDescription(string $description): void
+    {
+        $this->description = $description;
+    }
+
+    public function getIssueDate(): ?\DateTimeInterface
+    {
+        return $this->issueDate;
+    }
+
+    public function setIssueDate(?\DateTimeInterface $issueDate): void
+    {
+        $this->issueDate = $issueDate;
+    }
+
+    public function getManufacturer(): ?Manufacturer
+    {
+        return $this->manufacturer;
+    }
+
+    public function setManufacturer(?Manufacturer $manufacturer): void
+    {
+        $this->manufacturer = $manufacturer;
+    }
 }
