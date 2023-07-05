@@ -11,6 +11,8 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 
+use Symfony\Component\Validator\Constraints as Assert;
+
 /** A manufacturer */
 #[ApiResource]
 #[ORM\Entity]
@@ -24,18 +26,22 @@ class Manufacturer
 
     /** The name of the manufacturer */
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank]
     private string $name = '';
 
     /** The description of the manufacturer */
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank]
     private string $description = '';
 
     /** The country code of the manufacturer */
     #[ORM\Column(length: 3)]
+    #[Assert\NotBlank]
     private string $countryCode = '';
 
     /** The date that the manufacturer was listed */
     #[ORM\Column(type: "datetime")]
+    #[Assert\NotNull]
     private ?\DateTimeInterface $listedDate = null;
 
     #[ORM\OneToMany(
