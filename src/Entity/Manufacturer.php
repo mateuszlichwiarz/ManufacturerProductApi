@@ -36,6 +36,13 @@ class Manufacturer
     #[ORM\Column(type: "datetime")]
     private ?\DateTimeInterface $listedDate = null;
 
+    #[ORM\OneToMany(
+        mappedBy: 'manufacturer',
+        targetEntity: Product::class,
+        cascade: ["persist", "remove"]
+    )]
+    private iterable $products;
+
     public function getId(): int
     {
         return $this->id;

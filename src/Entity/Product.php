@@ -30,6 +30,8 @@ class Product
     #[ORM\Column(type: "datetime")]
     private ?\DateTimeInterface $issueDate = null;
 
-    #[ORM\ManyToOne(targetEntity: Manufacturer::class)]
+    #[ORM\ManyToOne(
+        targetEntity: Manufacturer::class,
+        inversedBy: "products")]
     private ?Manufacturer $manufacturer;
 }
