@@ -95,4 +95,9 @@ class Manufacturer
         $this->listedDate = $listedDate;
     }
 
+    public function getProducts(): iterable|ArrayCollection
+    {
+        return $this->products;
+    }
+
 }
