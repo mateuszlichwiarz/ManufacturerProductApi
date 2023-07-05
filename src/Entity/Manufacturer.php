@@ -5,9 +5,11 @@ declare(strict_types=1);
 namespace App\Entity;
 
 use ApiPlatform\Metadata\ApiResource;
+
 use Doctrine\DBAL\Types\Type;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /** A manufacturer */
 #[ApiResource]
@@ -42,6 +44,11 @@ class Manufacturer
         cascade: ["persist", "remove"]
     )]
     private iterable $products;
+    
+    public function __construct()
+    {
+        $this->products = new ArrayCollection();
+    }
 
     public function getId(): int
     {
