@@ -64,6 +64,7 @@ class Manufacturer
         targetEntity: Product::class,
         cascade: ["persist", "remove"]
     )]
+    #[ApiResource]
     private iterable $products;
     
     public function __construct()
