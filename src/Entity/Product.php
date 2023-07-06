@@ -19,8 +19,8 @@ use App\Entity\Manufacturer;
 #[ORM\Entity]
 #[
     ApiResource(
-        normalizationContext: ['groups' => ['read']],
-        denormalizationContext: ['groups' => ['write']]
+        normalizationContext: ['groups' => ['product.read']],
+        denormalizationContext: ['groups' => ['product.write']]
     ),
     ApiFilter(
         SearchFilter::class,
@@ -44,29 +44,29 @@ class Product
 
     #[ORM\Column]
     #[Assert\NotBlank]
-    #[Groups(['read', 'write'])]
+    #[Groups(['product.read', 'product.write'])]
     private ?string $mpn = null;
 
     #[ORM\Column(length: 255)]
     #[Assert\NotBlank]
-    #[Groups(['read', 'write'])]
+    #[Groups(['product.read', 'product.write'])]
     private string $name = '';
 
     #[ORM\Column(type: "text")]
     #[Assert\NotBlank]
-    #[Groups(['read', 'write'])]
+    #[Groups(['product.read', 'product.write'])]
     private string $description = '';
 
     #[ORM\Column(type: "datetime")]
     #[Assert\NotNull]
-    #[Groups(['read'])]
+    #[Groups(['product.read'])]
     private ?\DateTimeInterface $issueDate = null;
 
     #[ORM\ManyToOne(
         targetEntity: Manufacturer::class,
         inversedBy: "products")
     ]
-    #[Groups(['read'])]
+    #[Groups(['product.read'])]
     private ?Manufacturer $manufacturer;
 
     public function getId(): ?int
