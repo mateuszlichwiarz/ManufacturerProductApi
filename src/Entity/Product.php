@@ -12,12 +12,16 @@ use ApiPlatform\Doctrine\Orm\Filter\OrderFilter;
 use Doctrine\ORM\Mapping as ORM;
 
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 use App\Entity\Manufacturer;
 
 #[ORM\Entity]
 #[
-    ApiResource,
+    ApiResource(
+        normalizationContext: ['groups' => ['read']],
+        denormalizationContext: ['groups' => ['write']]
+    ),
     ApiFilter(
         SearchFilter::class,
         properties: [
@@ -40,23 +44,29 @@ class Product
 
     #[ORM\Column]
     #[Assert\NotBlank]
+    #[Groups(['read', 'write'])]
     private ?string $mpn = null;
 
     #[ORM\Column(length: 255)]
     #[Assert\NotBlank]
+    #[Groups(['read', 'write'])]
     private string $name = '';
 
     #[ORM\Column(type: "text")]
     #[Assert\NotBlank]
+    #[Groups(['read', 'write'])]
     private string $description = '';
 
     #[ORM\Column(type: "datetime")]
     #[Assert\NotNull]
+    #[Groups(['read'])]
     private ?\DateTimeInterface $issueDate = null;
 
     #[ORM\ManyToOne(
         targetEntity: Manufacturer::class,
-        inversedBy: "products")]
+        inversedBy: "products")
+    ]
+    #[Groups(['read'])]
     private ?Manufacturer $manufacturer;
 
     public function getId(): ?int
