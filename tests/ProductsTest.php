@@ -9,7 +9,6 @@ use Hautelook\AliceBundle\PhpUnit\RefreshDatabaseTrait;
 
 class ProductsTest extends ApiTestCase
 {
-    use RefreshDatabaseTrait;
 
     public function testGetCollection(): void
     {
@@ -78,6 +77,21 @@ class ProductsTest extends ApiTestCase
             'description'  => 'A Test Description',
             'issueDate'    => '2023-07-05T23:29:25.361Z']);
 
+    }
+
+    public function testUpdateProduct(): void
+    {
+        $client = static::createClient();
+
+        $client->request('PUT', '/api/products/6503', ['json' => [
+            'description' => 'An updated description',
+        ]]);
+
+        $this->assertResponseIsSuccessful();
+        $this->assertJsonContains([
+            '@id'        => '/api/products/6503',
+            'description' => 'An updated description',
+        ]);
     }
 
 }
