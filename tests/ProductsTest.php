@@ -14,7 +14,7 @@ class ProductsTest extends ApiTestCase
 
     public function testGetCollection(): void
     {
-        static::createClient()->request('GET', '/api/products');
+        $response = static::createClient()->request('GET', '/api/products');
 
         $this->assertResponseIsSuccessful();
 
@@ -35,6 +35,8 @@ class ProductsTest extends ApiTestCase
                 'hydra:next'  => '/api/products?page=2',
             ],
         ]);
+        
+        $this->assertCount(5, $response->toArray()['hydra:member']);
     }
 
 }
