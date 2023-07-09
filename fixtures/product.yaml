@@ -1,5 +1,5 @@
 App\Entity\Product:
-    product_{1.100}:
+    product_{1..100}:
         mpn: <isbn10()>
         name: <catchPhrase()>
         description: <sentence(6)>
