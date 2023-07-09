@@ -7,7 +7,6 @@ namespace App\Tests;
 use ApiPlatform\Symfony\Bundle\Test\ApiTestCase;
 use Hautelook\AliceBundle\PhpUnit\RefreshDatabaseTrait;
 
-
 class ProductsTest extends ApiTestCase
 {
     use RefreshDatabaseTrait;
@@ -53,6 +52,32 @@ class ProductsTest extends ApiTestCase
                 'hydra:next'    => '/api/products?page=3',
             ],
         ]);
+    }
+
+    public function testCreateProduct(): void
+    {
+        static::createClient()->request('POST', '/api/products', [
+            'json' => [
+                'mpn'          => '1234',
+                'name'         => 'A Test Product',
+                'description'  => 'A Test Description',
+                'issueDate'    => '2023-07-05T23:29:25.361Z',
+                'manufacturer' => '/api/manufacturers/1',
+            ]
+        ]);
+
+        $this->assertResponseStatusCodeSame(422);
+
+        $this->assertResponseHeaderSame(
+            'content-type', 'application/ld+json; charset=utf-8'
+        );
+
+        $this->assertJsonContains([
+            'mpn'          => '1234',
+            'name'         => 'A Test Product',
+            'description'  => 'A Test Description',
+            'issueDate'    => '2023-07-05T23:29:25.361Z']);
+
     }
 
 }
