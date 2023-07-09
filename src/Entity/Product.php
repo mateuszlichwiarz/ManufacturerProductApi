@@ -22,7 +22,8 @@ use App\Entity\Manufacturer;
 #[
     ApiResource(
         normalizationContext: ['groups' => ['product.read']],
-        denormalizationContext: ['groups' => ['product.write']]
+        denormalizationContext: ['groups' => ['product.write']],
+        paginationItemsPerPage: 5
     ),
     ApiFilter(
         SearchFilter::class,
