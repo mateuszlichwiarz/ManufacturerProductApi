@@ -72,7 +72,7 @@ class Product
 
     #[ORM\Column(type: "datetime")]
     #[Assert\NotNull]
-    #[Groups(['product.read'])]
+    #[Groups(['product.read', 'product.write'])]
     private ?\DateTimeInterface $issueDate = null;
 
     #[ORM\ManyToOne(
