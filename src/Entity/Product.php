@@ -79,7 +79,7 @@ class Product
         targetEntity: Manufacturer::class,
         inversedBy: "products")
     ]
-    #[Groups(['product.read'])]
+    #[Groups(['product.read', 'product.write'])]
     private ?Manufacturer $manufacturer;
 
     public function getId(): ?int
