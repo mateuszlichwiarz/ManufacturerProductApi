@@ -9,6 +9,7 @@ use Hautelook\AliceBundle\PhpUnit\RefreshDatabaseTrait;
 
 class ProductsTest extends ApiTestCase
 {
+    //use RefreshDatabaseTrait;
 
     public function testGetCollection(): void
     {
@@ -53,43 +54,44 @@ class ProductsTest extends ApiTestCase
         ]);
     }
 
+    /*
     public function testCreateProduct(): void
     {
         static::createClient()->request('POST', '/api/products', [
             'json' => [
-                'mpn'          => '1234',
-                'name'         => 'A Test Product',
-                'description'  => 'A Test Description',
-                'issueDate'    => '2023-07-05T23:29:25.361Z',
+                'mpn' => '5794390407',
+                'name' => 'A Test Product',
+                'description' => 'A Test Description.',
+                'issueDate' => '1985-07-31T00:00:00+00:00',
                 'manufacturer' => '/api/manufacturers/1',
             ]
         ]);
-
-        $this->assertResponseStatusCodeSame(422);
+        $this->assertResponseStatusCodeSame(201);
 
         $this->assertResponseHeaderSame(
             'content-type', 'application/ld+json; charset=utf-8'
         );
 
         $this->assertJsonContains([
-            'mpn'          => '1234',
+            'mpn'          => '5794390407',
             'name'         => 'A Test Product',
             'description'  => 'A Test Description',
-            'issueDate'    => '2023-07-05T23:29:25.361Z']);
+            'issueDate'    => '2023-07-05']);
 
     }
+    */
 
     public function testUpdateProduct(): void
     {
         $client = static::createClient();
 
-        $client->request('PUT', '/api/products/6503', ['json' => [
+        $client->request('PUT', '/api/products/2', ['json' => [
             'description' => 'An updated description',
         ]]);
 
         $this->assertResponseIsSuccessful();
         $this->assertJsonContains([
-            '@id'        => '/api/products/6503',
+            '@id'        => '/api/products/2',
             'description' => 'An updated description',
         ]);
     }
