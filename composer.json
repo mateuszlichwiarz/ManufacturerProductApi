@@ -81,6 +81,7 @@
         }
     },
     "require-dev": {
+        "dama/doctrine-test-bundle": "^7.2",
         "doctrine/doctrine-fixtures-bundle": "^3.4",
         "hautelook/alice-bundle": "^2.12",
         "justinrainbow/json-schema": "^5.2",
