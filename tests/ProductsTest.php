@@ -11,6 +11,8 @@ class ProductsTest extends ApiTestCase
 {
     //use RefreshDatabaseTrait;
 
+    private const API_TOKEN = '30f31604f100de1c143fd840fdce95bc4976b0400429b48a788e42871434de498aadf3c85365bc01c8a1f8a7a15050b659c02f4e5fc5a983c0c30fa3';
+
     public function testGetCollection(): void
     {
         $response = static::createClient()->request('GET', '/api/products');
