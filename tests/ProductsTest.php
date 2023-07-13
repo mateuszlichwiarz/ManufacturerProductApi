@@ -89,16 +89,16 @@ class ProductsTest extends ApiTestCase
         ]);
     }
 
-    /*
     public function testCreateProduct(): void
     {
-        static::createClient()->request('POST', '/api/products', [
+        $this->client->request('POST', '/api/products', [
+            'headers' => ['x-api-token' => self::API_TOKEN],
             'json' => [
                 'mpn' => '5794390407',
                 'name' => 'A Test Product',
-                'description' => 'A Test Description.',
+                'description' => 'A Test Description',
                 'issueDate' => '1985-07-31T00:00:00+00:00',
-                'manufacturer' => '/api/manufacturers/1',
+                'manufacturer' => '/api/manufacturers/101',
             ]
         ]);
         $this->assertResponseStatusCodeSame(201);
@@ -111,10 +111,9 @@ class ProductsTest extends ApiTestCase
             'mpn'          => '5794390407',
             'name'         => 'A Test Product',
             'description'  => 'A Test Description',
-            'issueDate'    => '2023-07-05']);
+            'issueDate'    => '1985-07-31T00:00:00+00:00']);
 
     }
-    */
 
     public function testUpdateProduct(): void
     {
