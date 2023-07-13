@@ -14,7 +14,7 @@ use Symfony\Contracts\HttpClient\HttpClientInterface;
 
 class ProductsTest extends ApiTestCase
 {
-    use RefreshDatabaseTrait;
+    //use RefreshDatabaseTrait;
 
     private const API_TOKEN = '30f31604f100de1c143fd840fdce95bc4976b0400429b48a788e42871434de498aadf3c85365bc01c8a1f8a7a15050b659c02f4e5fc5a983c0c30fa3';
 
@@ -27,9 +27,11 @@ class ProductsTest extends ApiTestCase
         $this->client = $this->createClient();
         $this->entityManager = $this->client->getContainer()->get('doctrine')->getManager();
 
+        $random = rand(0, 10000);
+
         $user = new User();
-        $user->setEmail('info@mateuszlichwiarz.com');
-        $user->setPassword('mateuszlichwiarz');
+        $user->setEmail($random.'info@mateuszlichwiarz.com');
+        $user->setPassword('mateuszlichwiarz'.$random);
         $this->entityManager->persist($user);
         $this->entityManager->flush();
 
@@ -71,18 +73,18 @@ class ProductsTest extends ApiTestCase
 
     public function testPagination(): void
     {
-        $response = $this->client->request('GET', '/api/products?page=2', [
+        $this->client->request('GET', '/api/products?page=2', [
             'headers' => ['x-api-token' => self::API_TOKEN]
         ]);
 
         $this->assertJsonContains([
-            'hydra:view'       => [
-                '@id'           => '/api/products?page=2',
-                '@type'         => 'hydra:PartialCollectionView',
-                'hydra:first'   => '/api/products?page=1',
-                'hydra:last'    => '/api/products?page=20',
+            'hydra:view' => [
+                '@id'            => '/api/products?page=2',
+                '@type'          => 'hydra:PartialCollectionView',
+                'hydra:first'    => '/api/products?page=1',
+                'hydra:last'     => '/api/products?page=20',
                 'hydra:previous' => '/api/products?page=1',
-                'hydra:next'    => '/api/products?page=3',
+                'hydra:next'     => '/api/products?page=3',
             ],
         ]);
     }
@@ -116,7 +118,7 @@ class ProductsTest extends ApiTestCase
 
     public function testUpdateProduct(): void
     {
-        $this->client->request('PUT', '/api/products/2', [
+        $this->client->request('PUT', '/api/products/1002', [
             'headers' => ['x-api-token' => self::API_TOKEN],
             'json' => [
                 'description' => 'An updated description',
@@ -125,7 +127,7 @@ class ProductsTest extends ApiTestCase
 
         $this->assertResponseIsSuccessful();
         $this->assertJsonContains([
-            '@id'        => '/api/products/2',
+            '@id'        => '/api/products/1002',
             'description' => 'An updated description',
         ]);
     }
