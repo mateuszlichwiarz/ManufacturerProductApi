@@ -14,7 +14,7 @@ use Symfony\Contracts\HttpClient\HttpClientInterface;
 
 class ProductsTest extends ApiTestCase
 {
-    //use RefreshDatabaseTrait;
+    use RefreshDatabaseTrait;
 
     private const API_TOKEN = '30f31604f100de1c143fd840fdce95bc4976b0400429b48a788e42871434de498aadf3c85365bc01c8a1f8a7a15050b659c02f4e5fc5a983c0c30fa3';
 
@@ -42,7 +42,9 @@ class ProductsTest extends ApiTestCase
 
     public function testGetCollection(): void
     {
-        $response = static::createClient()->request('GET', '/api/products');
+        $response = $this->client->request('GET', '/api/products', [
+            'headers' => ['x-api-token' => self::API_TOKEN]
+        ]);
 
         $this->assertResponseIsSuccessful();
 
@@ -69,7 +71,9 @@ class ProductsTest extends ApiTestCase
 
     public function testPagination(): void
     {
-        $response = static::createClient()->request('GET', '/api/products?page=2');
+        $response = $this->client->request('GET', '/api/products?page=2', [
+            'headers' => ['x-api-token' => self::API_TOKEN]
+        ]);
 
         $this->assertJsonContains([
             'hydra:view'       => [
@@ -112,11 +116,12 @@ class ProductsTest extends ApiTestCase
 
     public function testUpdateProduct(): void
     {
-        $client = static::createClient();
-
-        $client->request('PUT', '/api/products/2', ['json' => [
-            'description' => 'An updated description',
-        ]]);
+        $this->client->request('PUT', '/api/products/2', [
+            'headers' => ['x-api-token' => self::API_TOKEN],
+            'json' => [
+                'description' => 'An updated description',
+            ]
+        ]);
 
         $this->assertResponseIsSuccessful();
         $this->assertJsonContains([
