@@ -8,6 +8,8 @@ use ApiPlatform\Metadata\ApiResource;
 use ApiPlatform\Metadata\ApiFilter;
 use ApiPlatform\Metadata\Link;
 use ApiPlatform\Metadata\GetCollection;
+use ApiPlatform\Metadata\Get;
+use ApiPlatform\Metadata\Post;
 use ApiPlatform\Doctrine\Orm\Filter\SearchFilter;
 use ApiPlatform\Doctrine\Orm\Filter\OrderFilter;
 
@@ -23,6 +25,10 @@ use App\Entity\Manufacturer;
     ApiResource(
         normalizationContext: ['groups' => ['product.read']],
         denormalizationContext: ['groups' => ['product.write']],
+        operations: [
+            new Get(),
+            new Post(security: "is_granted('ROLE_ADMIN')"),
+        ],
         paginationItemsPerPage: 5
     ),
     ApiFilter(
