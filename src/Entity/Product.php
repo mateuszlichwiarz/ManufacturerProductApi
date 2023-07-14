@@ -88,6 +88,9 @@ class Product
     #[Groups(['product.read', 'product.write'])]
     private ?Manufacturer $manufacturer;
 
+    #[ORM\ManyToOne]
+    private ?User $owner = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -141,5 +144,17 @@ class Product
     public function setManufacturer(?Manufacturer $manufacturer): void
     {
         $this->manufacturer = $manufacturer;
+    }
+
+    public function getOwner(): ?User
+    {
+        return $this->owner;
+    }
+
+    public function setOwner(?User $owner): static
+    {
+        $this->owner = $owner;
+
+        return $this;
     }
 }
