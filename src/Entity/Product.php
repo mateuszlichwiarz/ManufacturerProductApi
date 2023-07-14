@@ -10,6 +10,7 @@ use ApiPlatform\Metadata\Link;
 use ApiPlatform\Metadata\GetCollection;
 use ApiPlatform\Metadata\Get;
 use ApiPlatform\Metadata\Post;
+use ApiPlatform\Metadata\Put;
 use ApiPlatform\Doctrine\Orm\Filter\SearchFilter;
 use ApiPlatform\Doctrine\Orm\Filter\OrderFilter;
 
@@ -28,6 +29,8 @@ use App\Entity\Manufacturer;
         operations: [
             new Get(),
             new Post(security: "is_granted('ROLE_ADMIN')"),
+            new Put(security: 'is_granted("ROLE_USER") and object.getOwner() == user',
+            securityMessage: 'A product can only be updated by the owner')
         ],
         paginationItemsPerPage: 5
     ),
@@ -89,6 +92,7 @@ class Product
     private ?Manufacturer $manufacturer;
 
     #[ORM\ManyToOne]
+    #[Groups(['product.read', 'product.write'])]
     private ?User $owner = null;
 
     public function getId(): ?int
