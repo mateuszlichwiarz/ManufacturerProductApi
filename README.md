@@ -1,4 +1,4 @@
-#ManufacturerProductApi
+# ManufacturerProductApi
 
 ### Getting Started
 
