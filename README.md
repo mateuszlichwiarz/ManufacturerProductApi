@@ -1,5 +1,8 @@
 # ManufacturerProductApi
 
+> [!NOTE]
+> PHP 8.3, Symfony 7.0, ApiPlatform 3.2
+
 ### Getting Started
 
 1. If not already done, [install Docker Compose](https://docs.docker.com/compose/install/) (v2.10+)
